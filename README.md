@@ -5,8 +5,9 @@ A production-grade, highly responsive, and premium Invoice & GST Calculator buil
 ---
 
 ## 🚀 Live Demo
+
 You can view the live application here:
-👉 **[Live Link](https://invoice-gst-calculator-nextjs.vercel.app)** *(Replace with your actual deployment link if different)*
+👉 **[Live Link](https://invoice-gst-calculator-nextjs.vercel.app)**
 
 ---
 
@@ -15,7 +16,7 @@ You can view the live application here:
 - **Double-Mode Tax System:** Dynamic toggling between **GST (CGST + SGST)** for intra-state transactions and **IGST** for inter-state transactions.
 - **Searchable HSN Lookups:** Built-in HSN code search dropdown supporting common services like Web Development (998313), Software Development (998314), Graphic Design (998312), and more.
 - **Automated Tax & Totals Math:** Live calculation of taxable amounts, tax percentages (0%, 5%, 12%, 18%, 28%), line item totals, and cumulative subtotals & grand totals.
-- **100% Mobile Responsive:** 
+- **100% Mobile Responsive:**
   - Dynamic **card-based view** for adding/managing line items on mobile and tablet viewports.
   - Interactive **transform-scaled sheet preview** that fits A4 designs on mobile screens without scrollbars.
   - Classic tabular grids on desktop screens.
@@ -71,33 +72,42 @@ src/
 To run this project locally, follow these steps:
 
 ### 1. Prerequisites
+
 Ensure you have **Node.js** (v18.x or higher) and **npm** installed.
 
 ### 2. Clone the Repository
+
 ```bash
 git clone https://github.com/Mehedy-Tanvir/invoice-gst-calculator-nextjs.git
 cd invoice-gst-calculator-nextjs
 ```
 
 ### 3. Install Dependencies
+
 ```bash
 npm install
 ```
 
 ### 4. Run the Development Server
+
 ```bash
 npm run dev
 ```
+
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
 ### 5. Running the Jest Test Suite
+
 To verify the calculation models and validations, execute:
+
 ```bash
 npx jest
 ```
 
 ### 6. Build for Production
+
 To generate a production-optimized build:
+
 ```bash
 npm run build
 ```
@@ -105,4 +115,5 @@ npm run build
 ---
 
 ## 🛡️ License
+
 This project is open-source and available under the MIT License.
