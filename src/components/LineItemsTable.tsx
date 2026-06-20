@@ -100,11 +100,11 @@ export default function LineItemsTable({
         <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-              <th className="px-3 py-3 font-semibold w-[35%]">Description</th>
+              <th className="px-3 py-3 font-semibold w-[30%]">Description</th>
               <th className="px-3 py-3 font-semibold w-[20%]">HSN Code</th>
-              <th className="px-3 py-3 font-semibold w-[10%]">Qty</th>
-              <th className="px-3 py-3 font-semibold w-[12%]">Unit Price</th>
-              <th className="px-3 py-3 font-semibold w-[10%]">GST Slab</th>
+              <th className="px-3 py-3 font-semibold w-[12%]">Qty</th>
+              <th className="px-3 py-3 font-semibold w-[11%]">Unit Price</th>
+              <th className="px-3 py-3 font-semibold w-[12%]">GST Slab</th>
               <th className="px-3 py-3 font-semibold w-[10%]">Tax</th>
               <th className="px-3 py-3 font-semibold w-[10%]">Line Total</th>
               <th className="px-3 py-3 text-right font-semibold w-[8%]">
@@ -138,7 +138,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <input
-                    className="w-full rounded-md border border-slate-300 px-1 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 px-0.5 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     min="0"
                     step="1"
                     type="number"
@@ -152,7 +152,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <input
-                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 px-0.5 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     min="0"
                     step="0.01"
                     type="number"
@@ -166,7 +166,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <select
-                    className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 bg-white px-0.5 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     value={item.gstSlab}
                     onChange={(event) =>
                       updateItem(item.id, {
