@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Invoice & GST Calculator
 
-## Getting Started
+A production-grade, highly responsive, and premium Invoice & GST Calculator built using **Next.js (App Router)**, **TypeScript**, and **Tailwind CSS**. This application helps businesses and freelancers seamlessly calculate Indian GST/IGST slabs, manage line items, perform HSN code lookups, and export professional A4-style invoices to PDF with a single click.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 🚀 Live Demo
+You can view the live application here:
+👉 **[Live Link](https://invoice-gst-calculator-nextjs.vercel.app)** *(Replace with your actual deployment link if different)*
+
+---
+
+## ✨ Features
+
+- **Double-Mode Tax System:** Dynamic toggling between **GST (CGST + SGST)** for intra-state transactions and **IGST** for inter-state transactions.
+- **Searchable HSN Lookups:** Built-in HSN code search dropdown supporting common services like Web Development (998313), Software Development (998314), Graphic Design (998312), and more.
+- **Automated Tax & Totals Math:** Live calculation of taxable amounts, tax percentages (0%, 5%, 12%, 18%, 28%), line item totals, and cumulative subtotals & grand totals.
+- **100% Mobile Responsive:** 
+  - Dynamic **card-based view** for adding/managing line items on mobile and tablet viewports.
+  - Interactive **transform-scaled sheet preview** that fits A4 designs on mobile screens without scrollbars.
+  - Classic tabular grids on desktop screens.
+- **Client-Side Persistence:** LocalStorage integration to securely pass invoice drafts from the builder page to the preview screen.
+- **Professional PDF Export:** Integrates `html2canvas` + `jsPDF` to generate pixel-perfect A4-style invoices for instant downloading.
+- **Validation Engine:** Built-in validation rules, including a strict 15-character alphanumeric Indian GSTIN regex validator.
+
+---
+
+## 🛠️ Technology Stack
+
+- **Core Framework:** Next.js 16 (App Router) & React 19
+- **Programming Language:** TypeScript (Strict Mode)
+- **Styling:** Tailwind CSS (v4)
+- **PDF Generation:** `jsPDF` & `html2canvas`
+- **Testing Framework:** Jest & Jest-DOM
+
+---
+
+## 📂 Project Structure
+
+```text
+src/
+├── app/
+│   ├── layout.tsx         # App wrapper rendering the responsive footer on all pages
+│   ├── globals.css        # Tailwind directives and main styles
+│   ├── page.tsx           # Interactive Invoice Builder form page
+│   └── preview/
+│       └── page.tsx       # Live Invoice preview sheet and PDF export page
+├── components/
+│   ├── InvoiceForm.tsx    # Seller/Buyer details & Invoice metadata form
+│   ├── LineItemsTable.tsx # Responsive line items manager (table/card view switcher)
+│   ├── HSNLookup.tsx      # Searchable datalist HSN dropdown
+│   ├── GSTSummary.tsx     # Live calculating summary widget
+│   ├── InvoicePreview.tsx # Scaled A4 preview sheet component
+│   └── Footer.tsx         # Developer information footer
+├── types/
+│   └── invoice.ts         # Strictly-typed interfaces for invoice models
+├── utils/
+│   ├── gstCalculations.ts # Rounding, slab math, Indian currency formatting, and GSTIN regex
+│   └── pdfExport.ts       # High-DPI canvas wrapper for PDF generation
+└── __tests__/
+    ├── gstCalculations.test.ts
+    ├── invoiceValidation.test.ts
+    ├── hsnLookup.test.ts
+    └── pdfExport.test.ts
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 💻 Local Installation & Development
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+To run this project locally, follow these steps:
 
-## Learn More
+### 1. Prerequisites
+Ensure you have **Node.js** (v18.x or higher) and **npm** installed.
 
-To learn more about Next.js, take a look at the following resources:
+### 2. Clone the Repository
+```bash
+git clone https://github.com/Mehedy-Tanvir/invoice-gst-calculator-nextjs.git
+cd invoice-gst-calculator-nextjs
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 3. Install Dependencies
+```bash
+npm install
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 4. Run the Development Server
+```bash
+npm run dev
+```
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
 
-## Deploy on Vercel
+### 5. Running the Jest Test Suite
+To verify the calculation models and validations, execute:
+```bash
+npx jest
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 6. Build for Production
+To generate a production-optimized build:
+```bash
+npm run build
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🛡️ License
+This project is open-source and available under the MIT License.
