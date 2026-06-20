@@ -24,3 +24,10 @@ select,
 textarea {
   font: inherit;
 }
+
+@media print {
+  body * { visibility: hidden; }
+  #invoice-preview, #invoice-preview * { visibility: visible; }
+  #invoice-preview { position: absolute; left: 0; top: 0; width: 100%; }
+  .no-print { display: none !important; }
+}

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import InvoicePreview from "@/components/InvoicePreview";
 import type { InvoiceDetails } from "@/types/invoice";
-import { downloadInvoicePDF } from "@/utils/pdfExport";
+import { exportInvoicePDF } from "@/utils/pdfExport";
 
 const storageKey = "invoice-gst-calculator:invoice";
 
@@ -38,16 +38,13 @@ export default function PreviewPage() {
     setError("");
 
     try {
-      await downloadInvoicePDF(
+      await exportInvoicePDF(
         "invoice-preview",
-        `${invoice.invoiceNumber || "invoice"}.pdf`,
+        `invoice-${invoice.invoiceNumber || "draft"}.pdf`,
       );
     } catch (downloadError) {
-      setError(
-        downloadError instanceof Error
-          ? downloadError.message
-          : "Unable to generate PDF.",
-      );
+      console.error(downloadError);
+      setError("Unable to generate PDF. Please try again.");
     } finally {
       setIsDownloading(false);
     }
@@ -56,7 +53,7 @@ export default function PreviewPage() {
   return (
     <div className="min-h-full bg-slate-50">
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="no-print mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-semibold uppercase tracking-wide text-blue-600">
               Preview
@@ -79,7 +76,7 @@ export default function PreviewPage() {
               disabled={!invoice || isDownloading}
               onClick={handleDownload}
             >
-              {isDownloading ? "Preparing PDF..." : "Download PDF"}
+              {isDownloading ? "Generating PDF..." : "Download PDF"}
             </button>
           </div>
         </div>

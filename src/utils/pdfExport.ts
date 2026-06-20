@@ -1,46 +1,46 @@
-export async function downloadInvoicePDF(
-  elementId = "invoice-preview",
-  fileName = "invoice.pdf",
-): Promise<void> {
-  if (typeof window === "undefined") {
-    return;
-  }
+import html2canvas from "html2canvas";
+import { jsPDF } from "jspdf";
 
+export async function exportInvoicePDF(
+  elementId: string,
+  filename: string,
+): Promise<void> {
   const element = document.getElementById(elementId);
 
   if (!element) {
-    throw new Error(`Unable to find invoice element with id "${elementId}".`);
+    throw new Error("Invoice preview element not found");
   }
-
-  const [{ default: html2canvas }, { jsPDF }] = await Promise.all([
-    import("html2canvas"),
-    import("jspdf"),
-  ]);
 
   const canvas = await html2canvas(element, {
-    backgroundColor: "#ffffff",
     scale: 2,
     useCORS: true,
+    logging: false,
   });
 
-  const imageData = canvas.toDataURL("image/png");
   const pdf = new jsPDF("p", "mm", "a4");
-  const pageWidth = pdf.internal.pageSize.getWidth();
-  const pageHeight = pdf.internal.pageSize.getHeight();
-  const imageWidth = pageWidth;
-  const imageHeight = (canvas.height * imageWidth) / canvas.width;
-  let heightLeft = imageHeight;
-  let position = 0;
+  const imgWidth = 210;
+  const pageHeight = 297;
+  const imgHeight = (canvas.height * imgWidth) / canvas.width;
+  const imageData = canvas.toDataURL("image/jpeg", 0.98);
 
-  pdf.addImage(imageData, "PNG", 0, position, imageWidth, imageHeight);
-  heightLeft -= pageHeight;
-
-  while (heightLeft > 0) {
-    position = heightLeft - imageHeight;
-    pdf.addPage();
-    pdf.addImage(imageData, "PNG", 0, position, imageWidth, imageHeight);
-    heightLeft -= pageHeight;
+  if (imgHeight <= pageHeight) {
+    pdf.addImage(imageData, "JPEG", 0, 0, imgWidth, Math.min(imgHeight, pageHeight));
+    pdf.save(filename);
+    return;
   }
 
-  pdf.save(fileName);
+  let remainingHeight = imgHeight;
+  let position = 0;
+
+  pdf.addImage(imageData, "JPEG", 0, position, imgWidth, imgHeight);
+  remainingHeight -= pageHeight;
+
+  while (remainingHeight > 0) {
+    position = remainingHeight - imgHeight;
+    pdf.addPage();
+    pdf.addImage(imageData, "JPEG", 0, position, imgWidth, imgHeight);
+    remainingHeight -= pageHeight;
+  }
+
+  pdf.save(filename);
 }
