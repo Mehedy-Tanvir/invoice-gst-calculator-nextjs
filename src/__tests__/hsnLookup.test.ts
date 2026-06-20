@@ -1,29 +1,36 @@
-import assert from "node:assert/strict";
-import { describe, it } from "node:test";
-import { HSN_OPTIONS } from "@/components/HSNLookup";
+import { HSN_OPTIONS, searchHSN } from "@/components/HSNLookup";
 
-describe("HSN lookup options", () => {
-  it("contains the required service HSN codes", () => {
-    const codes = HSN_OPTIONS.map((option) => option.code);
+describe("searchHSN", () => {
+  it('returns the web development entry for search "web"', () => {
+    expect(searchHSN("web")).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          code: "998313",
+          label: "Web development",
+        }),
+      ]),
+    );
+  });
 
-    assert.deepEqual(codes, [
-      "998314",
-      "998313",
-      "998312",
-      "998361",
-      "997331",
-      "998222",
-      "9982",
-      "9983",
-      "9989",
-      "998311",
+  it('returns the software development entry for search "998314"', () => {
+    expect(searchHSN("998314")).toEqual([
+      {
+        code: "998314",
+        label: "Software development",
+      },
     ]);
   });
 
-  it("maps software development to 998314", () => {
-    assert.equal(
-      HSN_OPTIONS.find((option) => option.code === "998314")?.label,
-      "Software development",
-    );
+  it('returns an empty array for search "xyz123"', () => {
+    expect(searchHSN("xyz123")).toEqual([]);
+  });
+
+  it("returns all 10 entries for an empty string search", () => {
+    expect(searchHSN("")).toHaveLength(10);
+    expect(searchHSN("")).toEqual(HSN_OPTIONS);
+  });
+
+  it("performs case-insensitive searches", () => {
+    expect(searchHSN("WEB")).toEqual(searchHSN("web"));
   });
 });

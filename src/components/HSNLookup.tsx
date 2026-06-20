@@ -13,6 +13,20 @@ export const HSN_OPTIONS = [
   { code: "998311", label: "Data processing" },
 ];
 
+export function searchHSN(query: string): typeof HSN_OPTIONS {
+  const normalizedQuery = query.trim().toLowerCase();
+
+  if (!normalizedQuery) {
+    return HSN_OPTIONS;
+  }
+
+  return HSN_OPTIONS.filter(
+    (option) =>
+      option.code.includes(normalizedQuery) ||
+      option.label.toLowerCase().includes(normalizedQuery),
+  );
+}
+
 type HSNLookupProps = {
   value: string;
   onChange: (code: string, description?: string) => void;
