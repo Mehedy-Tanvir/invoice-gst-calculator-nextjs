@@ -90,18 +90,19 @@ export default function LineItemsTable({
         </button>
       </div>
 
-      <div className="mt-5 overflow-x-auto">
-        <table className="min-w-[980px] w-full border-collapse text-left text-sm">
+      {/* Desktop View */}
+      <div className="hidden lg:block mt-5 overflow-x-auto">
+        <table className="w-full border-collapse text-left text-sm">
           <thead>
             <tr className="border-b border-slate-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
-              <th className="px-3 py-3 font-semibold">Description</th>
-              <th className="px-3 py-3 font-semibold">HSN Code</th>
-              <th className="px-3 py-3 font-semibold">Qty</th>
-              <th className="px-3 py-3 font-semibold">Unit Price</th>
-              <th className="px-3 py-3 font-semibold">GST Slab</th>
-              <th className="px-3 py-3 font-semibold">Tax</th>
-              <th className="px-3 py-3 font-semibold">Line Total</th>
-              <th className="px-3 py-3 text-right font-semibold">Action</th>
+              <th className="px-3 py-3 font-semibold w-[35%]">Description</th>
+              <th className="px-3 py-3 font-semibold w-[20%]">HSN Code</th>
+              <th className="px-3 py-3 font-semibold w-[10%]">Qty</th>
+              <th className="px-3 py-3 font-semibold w-[12%]">Unit Price</th>
+              <th className="px-3 py-3 font-semibold w-[10%]">GST Slab</th>
+              <th className="px-3 py-3 font-semibold w-[10%]">Tax</th>
+              <th className="px-3 py-3 font-semibold w-[10%]">Line Total</th>
+              <th className="px-3 py-3 text-right font-semibold w-[8%]">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -130,7 +131,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <input
-                    className="w-24 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     min="0"
                     step="1"
                     type="number"
@@ -144,7 +145,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <input
-                    className="w-32 rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     min="0"
                     step="0.01"
                     type="number"
@@ -158,7 +159,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <select
-                    className="w-28 rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     value={item.gstSlab}
                     onChange={(event) =>
                       updateItem(item.id, {
@@ -173,14 +174,14 @@ export default function LineItemsTable({
                     ))}
                   </select>
                 </td>
-                <td className="px-3 py-3 align-top text-slate-600">
+                <td className="px-3 py-3 align-top text-slate-600 whitespace-nowrap">
                   {taxType === "GST" ? (
                     <div className="space-y-1">
-                      <p>CGST {formatCurrency(item.cgst)}</p>
-                      <p>SGST {formatCurrency(item.sgst)}</p>
+                      <p className="text-xs">CGST: {formatCurrency(item.cgst)}</p>
+                      <p className="text-xs">SGST: {formatCurrency(item.sgst)}</p>
                     </div>
                   ) : (
-                    <p>IGST {formatCurrency(item.igst)}</p>
+                    <p className="text-xs">IGST: {formatCurrency(item.igst)}</p>
                   )}
                 </td>
                 <td className="px-3 py-3 align-top font-semibold text-slate-800">
@@ -200,6 +201,143 @@ export default function LineItemsTable({
             ))}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile/Tablet Card View */}
+      <div className="block lg:hidden mt-5 space-y-4">
+        {items.map((item, index) => (
+          <div
+            key={item.id}
+            className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 space-y-4 relative transition hover:border-blue-200"
+          >
+            <div className="flex items-center justify-between border-b border-slate-200 pb-2">
+              <span className="text-sm font-bold text-slate-700">Item #{index + 1}</span>
+              <button
+                type="button"
+                disabled={items.length === 1}
+                onClick={() => removeItem(item.id)}
+                className="text-xs font-semibold text-red-600 hover:text-red-700 disabled:opacity-40 disabled:cursor-not-allowed"
+              >
+                Remove
+              </button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="space-y-1">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  Description
+                </span>
+                <input
+                  className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                  placeholder="Service description"
+                  value={item.description}
+                  onChange={(event) =>
+                    updateItem(item.id, { description: event.target.value })
+                  }
+                />
+              </div>
+
+              <div className="space-y-1">
+                <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                  HSN Code
+                </span>
+                <HSNLookup
+                  value={item.hsnCode}
+                  onChange={(code, description) =>
+                    updateItem(item.id, {
+                      hsnCode: code,
+                      description: item.description || description || "",
+                    })
+                  }
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 sm:col-span-2">
+                <div className="space-y-1">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Quantity
+                  </span>
+                  <input
+                    className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    min="0"
+                    step="1"
+                    type="number"
+                    value={item.quantity}
+                    onChange={(event) =>
+                      updateItem(item.id, {
+                        quantity: Number(event.target.value),
+                      })
+                    }
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    Unit Price
+                  </span>
+                  <input
+                    className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    min="0"
+                    step="0.01"
+                    type="number"
+                    value={item.unitPrice}
+                    onChange={(event) =>
+                      updateItem(item.id, {
+                        unitPrice: Number(event.target.value),
+                      })
+                    }
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 sm:col-span-2">
+                <div className="space-y-1">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider">
+                    GST Slab
+                  </span>
+                  <select
+                    className="w-full rounded-md border border-slate-300 bg-white px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    value={item.gstSlab}
+                    onChange={(event) =>
+                      updateItem(item.id, {
+                        gstSlab: Number(event.target.value) as GSTSlab,
+                      })
+                    }
+                  >
+                    {gstSlabs.map((slab) => (
+                      <option key={slab} value={slab}>
+                        {slab}%
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-1 flex flex-col justify-end">
+                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+                    Calculated Tax
+                  </span>
+                  <div className="text-xs text-slate-700 bg-white border border-slate-200 p-2 rounded-md h-9 flex items-center justify-center font-medium">
+                    {taxType === "GST" ? (
+                      <div className="flex justify-between w-full px-1">
+                        <span>CGST: {formatCurrency(item.cgst)}</span>
+                        <span>SGST: {formatCurrency(item.sgst)}</span>
+                      </div>
+                    ) : (
+                      <span>IGST: {formatCurrency(item.igst)}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between border-t border-slate-200 pt-3">
+              <span className="text-sm font-semibold text-slate-500">Line Total</span>
+              <span className="text-lg font-bold text-blue-600">
+                {formatCurrency(item.lineTotal)}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
