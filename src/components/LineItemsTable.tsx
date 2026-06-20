@@ -55,13 +55,18 @@ export default function LineItemsTable({
   const updateItem = (id: string, updates: Partial<InvoiceItem>) => {
     onItemsChange(
       items.map((item) =>
-        item.id === id ? withCalculatedTaxes({ ...item, ...updates }, taxType) : item,
+        item.id === id
+          ? withCalculatedTaxes({ ...item, ...updates }, taxType)
+          : item,
       ),
     );
   };
 
   const addItem = () => {
-    onItemsChange([...items, withCalculatedTaxes(createEmptyInvoiceItem(), taxType)]);
+    onItemsChange([
+      ...items,
+      withCalculatedTaxes(createEmptyInvoiceItem(), taxType),
+    ]);
   };
 
   const removeItem = (id: string) => {
@@ -102,7 +107,9 @@ export default function LineItemsTable({
               <th className="px-3 py-3 font-semibold w-[10%]">GST Slab</th>
               <th className="px-3 py-3 font-semibold w-[10%]">Tax</th>
               <th className="px-3 py-3 font-semibold w-[10%]">Line Total</th>
-              <th className="px-3 py-3 text-right font-semibold w-[8%]">Action</th>
+              <th className="px-3 py-3 text-right font-semibold w-[8%]">
+                Action
+              </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-100">
@@ -131,7 +138,7 @@ export default function LineItemsTable({
                 </td>
                 <td className="px-3 py-3 align-top">
                   <input
-                    className="w-full rounded-md border border-slate-300 px-3 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
+                    className="w-full rounded-md border border-slate-300 px-1 py-2 text-sm text-slate-800 outline-none transition focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                     min="0"
                     step="1"
                     type="number"
@@ -177,8 +184,12 @@ export default function LineItemsTable({
                 <td className="px-3 py-3 align-top text-slate-600 whitespace-nowrap">
                   {taxType === "GST" ? (
                     <div className="space-y-1">
-                      <p className="text-xs">CGST: {formatCurrency(item.cgst)}</p>
-                      <p className="text-xs">SGST: {formatCurrency(item.sgst)}</p>
+                      <p className="text-xs">
+                        CGST: {formatCurrency(item.cgst)}
+                      </p>
+                      <p className="text-xs">
+                        SGST: {formatCurrency(item.sgst)}
+                      </p>
                     </div>
                   ) : (
                     <p className="text-xs">IGST: {formatCurrency(item.igst)}</p>
@@ -211,7 +222,9 @@ export default function LineItemsTable({
             className="rounded-lg border border-slate-200 bg-slate-50/50 p-4 space-y-4 relative transition hover:border-blue-200"
           >
             <div className="flex items-center justify-between border-b border-slate-200 pb-2">
-              <span className="text-sm font-bold text-slate-700">Item #{index + 1}</span>
+              <span className="text-sm font-bold text-slate-700">
+                Item #{index + 1}
+              </span>
               <button
                 type="button"
                 disabled={items.length === 1}
@@ -331,7 +344,9 @@ export default function LineItemsTable({
             </div>
 
             <div className="flex items-center justify-between border-t border-slate-200 pt-3">
-              <span className="text-sm font-semibold text-slate-500">Line Total</span>
+              <span className="text-sm font-semibold text-slate-500">
+                Line Total
+              </span>
               <span className="text-lg font-bold text-blue-600">
                 {formatCurrency(item.lineTotal)}
               </span>
